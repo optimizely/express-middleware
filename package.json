@@ -1,0 +1,16 @@
+{
+  "name": "optimizely-express",
+  "version": "1.0.0",
+  "description": "Express middleware for Optimizely",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@optimizely/datafile-manager": "0.1.0",
+    "@optimizely/optimizely-sdk": "^3.0.1"
+  }
+}
