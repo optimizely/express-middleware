@@ -94,9 +94,9 @@ function datafileRoute(req, res, next) {
  */
 function isRouteEnabled(featureKey, onRouteDisabled) {
   return function (req, res, next) {
-    req.userId = req.userId || 'test123'
+    // TODO: Improve design of user Id
+    //req.userId = req.userId || 'test123'
     const optimizelyClient = req && req.optimizely && req.optimizely.client
-    const userId = req && req[userIdKeyPath]
     if (optimizelyClient) {
       const enabled = optimizelyClient.isFeatureEnabled(featureKey, req.userId);
       if (enabled) {
@@ -105,7 +105,7 @@ function isRouteEnabled(featureKey, onRouteDisabled) {
         return
       }
     }
-    onRouteDisabled();
+    onRouteDisabled(req, res, next);
   }
 }
 
