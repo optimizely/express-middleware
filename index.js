@@ -19,7 +19,7 @@
 'use strict'
 
 const OptimizelySdk = require('@optimizely/optimizely-sdk');
-const { NodeDatafileManager } = require('@optimizely/datafile-manager');
+const { NodeDatafileManager } = require('@optimizely/js-sdk-datafile-manager');
 
 
 /**

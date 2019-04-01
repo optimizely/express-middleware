@@ -10,7 +10,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@optimizely/datafile-manager": "0.1.0",
+    "@optimizely/js-sdk-datafile-manager": "0.1.0",
     "@optimizely/optimizely-sdk": "^3.0.1"
   }
 }
