@@ -19,7 +19,7 @@
 'use strict'
 
 const OptimizelySdk = require('@optimizely/optimizely-sdk');
-const { NodeDatafileManager } = require('@optimizely/js-sdk-datafile-manager');
+const { DatafileManager } = require('@optimizely/js-sdk-datafile-manager');
 
 
 /**
@@ -40,7 +40,7 @@ function optimizely(options) {
     logLevel,
   } = options;
 
-  const manager = new NodeDatafileManager({
+  const manager = new DatafileManager({
     sdkKey,
     ...options
   });
