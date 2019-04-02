@@ -45,8 +45,8 @@ function optimizely(options) {
     ...options
   });
 
-  manager.on('update', () => { datafile = JSON.parse(manager.get()) });
-  manager.onReady().then(() => { datafile = JSON.parse(manager.get()) });
+  manager.on('update', () => { datafile = manager.get() });
+  manager.onReady().then(() => { datafile = manager.get() });
 
   manager.start();
 
