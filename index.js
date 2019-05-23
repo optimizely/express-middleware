@@ -1,5 +1,5 @@
 /**
- * Optimizely Express
+ * Optimizely Express SDK
  *
  * Copyright 2019, Optimizely
  *
@@ -32,7 +32,7 @@ const { DatafileManager } = require('@optimizely/js-sdk-datafile-manager');
  *
  * @returns {Function} to handle the express request
  */
-function optimizely(options) {
+function initialize(options) {
 
   let {
     sdkKey,
@@ -50,66 +50,114 @@ function optimizely(options) {
 
   manager.start();
 
-  return function optimizely(req, res, next) {
-    const optimizelyClient = OptimizelySdk.createInstance({
-      datafile: datafile,
-      ...options
-    });
+  return {
+    /**
+     * Optimizely Middleware
+     * Provides an Optimizely client instance of the SDK available
+     * on routes
+     *
+     * @param {Object} req express request object
+     * @param {Object} res express response object
+     * @param {Function} next express routing next function
+     */
+    middleware(req, res, next) {
+      const optimizelyClient = OptimizelySdk.createInstance({
+        datafile: datafile,
+        ...options
+      });
 
-    req.optimizely = {
-      datafile: datafile || {},
-      client: optimizelyClient,
-    }
+      req.optimizely = {
+        datafile: datafile || {},
+        client: optimizelyClient,
+      }
 
-    next();
-  }
-}
+      next();
+    },
 
-/**
- * datafileRoute
- *
- * Provides a route that exposes the contents of the datafile currently loaded in your application
- *
- * @param {Object} req express request object
- * @param {Object} res express response object
- * @param {Function} next express routing next function
- */
-function datafileRoute(req, res, next) {
-  const datafile = (req && req.optimizely && req.optimizely.datafile) || {}
-  res.setHeader('Content-Type', 'application/json');
-  res.status(200).send(JSON.stringify(datafile, null, '  '));
-}
+    /**
+     * Optimizely Webhook Route
+     * Route to accept webhook notifications from Optimizely
+     *
+     * @param {Object} req express request object
+     * @param {Object} res express response object
+     * @param {Function} next express routing next function
+     */
+    async webhookRequest(req, res, next) {
 
+      const WEBHOOK_SECRET = process.env.OPTIMIZELY_WEBHOOK_SECRET
+      const webhook_payload = req.body
+      const hmac = crypto.createHmac('sha1', WEBHOOK_SECRET)
+      const webhookDigest = hmac.update(webhook_payload).digest('hex')
 
-/**
- * isRouteEnabled
- *
- * Provides a method which can be used to block a route in express on whether the feature is enabled or not
- *
- * @param {String} featureKey for the specific feature in question
- * @param {Function} onRouteDisabled function called when the feature is disabled
- * @param {Error} featureKey for the specific feature in question
- *
- * @returns {Function}
- */
-function isRouteEnabled(featureKey, onRouteDisabled) {
-  return function (req, res, next) {
-    // TODO: Improve design of user Id
-    //req.userId = req.userId || 'test123'
-    const optimizelyClient = req && req.optimizely && req.optimizely.client
-    if (optimizelyClient) {
-      const enabled = optimizelyClient.isFeatureEnabled(featureKey, req.userId);
-      if (enabled) {
-        // Feature is enabled move on to next route
-        next();
+      const computedSignature = `sha1=${webhookDigest}`
+      const requestSignature = req.header('X-Hub-Signature')
+
+      if (!crypto.timingSafeEqual(Buffer.from(computedSignature, 'utf8'), Buffer.from(requestSignature, 'utf8'))) {
+        console.log(`[Optimizely] Signatures did not match! Do not trust webhook request")`)
+        res.status(500)
         return
       }
+
+      console.log(`
+        [Optimizely] Optimizely webhook request received!
+        Signatures match! Webhook verified as coming from Optimizely
+        Download Optimizely datafile and re-instantiate the SDK Client
+        For the latest changes to take affect
+      `);
+
+      datafile = await rp(`https://cdn.optimizely.com/datafiles/${sdkKey}.json`)
+
+      res.sendStatus(200)
+    },
+
+    /**
+     * datafileRoute
+     *
+     * Provides a route that exposes the contents of the datafile currently loaded in your application
+     *
+     * @param {Object} req express request object
+     * @param {Object} res express response object
+     * @param {Function} next express routing next function
+     */
+    datafileRoute(req, res, next) {
+      const datafile = (req && req.optimizely && req.optimizely.datafile) || {}
+      datafile.lastUpdated = new Date();
+      res.setHeader('Content-Type', 'application/json');
+      res.status(200).send(JSON.stringify(datafile, null, '  '));
+    },
+
+    /**
+     * isRouteEnabled
+     *
+     * Provides a method which can be used to block a route in express on whether the feature is enabled or not
+     *
+     * @param {String} featureKey for the specific feature in question
+     * @param {Function} onRouteDisabled function called when the feature is disabled
+     * @param {Error} featureKey for the specific feature in question
+     *
+     * @returns {Function}
+     */
+    isRouteEnabled(featureKey, onRouteDisabled) {
+      return function (req, res, next) {
+        // TODO: Improve design of user Id
+        //req.userId = req.userId || 'test123'
+        const optimizelyClient = req && req.optimizely && req.optimizely.client
+        if (optimizelyClient) {
+          // TODO: Pass in attributes
+          const enabled = optimizelyClient.isFeatureEnabled(featureKey, req.userId);
+          if (enabled) {
+            // Feature is enabled move on to next route
+            next();
+            return
+          }
+        }
+        onRouteDisabled(req, res, next);
+      }
     }
-    onRouteDisabled(req, res, next);
   }
 }
 
 
-module.exports = optimizely
-module.exports.datafileRoute = datafileRoute
-module.exports.isRouteEnabled = isRouteEnabled
+module.exports = {
+  initialize,
+}
