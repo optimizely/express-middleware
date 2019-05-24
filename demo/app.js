@@ -10,6 +10,9 @@ var usersRouter = require('./routes/users');
 
 var app = express();
 
+/*************
+ * Optimizely Express SDK Usage
+ */
 var optimizelyExpressSdk = require('../index.js');
 var optimizely = optimizelyExpressSdk.initialize({
   sdkKey: 'CZsVVgn6j9ce6fNPt2ZEiB',
@@ -17,6 +20,8 @@ var optimizely = optimizelyExpressSdk.initialize({
 app.use(optimizely.middleware);
 app.use('/webhooks/optimizely', bodyParser.text({ type: '*/*' }), optimizely.webhookRequest);
 app.use('/optimizely/datafile', optimizely.datafileRoute);
+
+/*************/
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
