@@ -118,8 +118,8 @@ function initialize(options) {
         For the latest changes to take affect
       `);
 
-      datafile = await rp(`https://cdn.optimizely.com/datafiles/${sdkKey}.json`)
-      datafile._lastUpdated = new Date();
+      const datafileString = await rp(`https://cdn.optimizely.com/datafiles/${sdkKey}.json`)
+      datafile = JSON.parse(datafileString);
 
       res.sendStatus(200)
     },
