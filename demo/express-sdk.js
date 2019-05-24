@@ -20,6 +20,7 @@
 
 const OptimizelySdk = require('@optimizely/optimizely-sdk');
 const { DatafileManager } = require('@optimizely/js-sdk-datafile-manager');
+const crypto = require('crypto');
 
 
 /**
