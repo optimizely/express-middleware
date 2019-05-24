@@ -15,7 +15,9 @@ app.set('view engine', 'jade');
 /*************
  * Optimizely Express SDK Usage
  */
-var optimizelyExpressSdk = require('../index.js');
+// TODO: Update once package is public
+//var optimizelyExpressSdk = require('../index.js');
+var optimizelyExpressSdk = require('./express-sdk.js');
 var optimizely = optimizelyExpressSdk.initialize({
   sdkKey: 'CZsVVgn6j9ce6fNPt2ZEiB',
 });
