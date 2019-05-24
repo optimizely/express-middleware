@@ -151,11 +151,11 @@ function initialize(options) {
     isRouteEnabled(featureKey, onRouteDisabled) {
       return function (req, res, next) {
         // TODO: Improve design of user Id
-        //req.userId = req.userId || 'test123'
+        const userId = req.userId || 'test123'
         const optimizelyClient = req && req.optimizely && req.optimizely.client
         if (optimizelyClient) {
           // TODO: Pass in attributes
-          const enabled = optimizelyClient.isFeatureEnabled(featureKey, req.userId);
+          const enabled = optimizelyClient.isFeatureEnabled(featureKey, userId);
           if (enabled) {
             // Feature is enabled move on to next route
             next();
