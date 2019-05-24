@@ -40,13 +40,21 @@ function initialize(options) {
     logLevel,
   } = options;
 
+
+  const defaultLogger = require('@optimizely/optimizely-sdk').logging;
   const manager = new DatafileManager({
     sdkKey,
     ...options
   });
 
-  manager.on('update', () => { datafile = manager.get() });
-  manager.onReady().then(() => { datafile = manager.get() });
+  function updateDatafile() {
+    datafile = manager.get()
+    datafile._lastUpdated = new Date();
+    console.log('[Optimizely] Datafile Updated!');
+  }
+
+  manager.on('update', updateDatafile);
+  manager.onReady().then(updateDatafile);
 
   manager.start();
 
@@ -63,6 +71,9 @@ function initialize(options) {
     middleware(req, res, next) {
       const optimizelyClient = OptimizelySdk.createInstance({
         datafile: datafile,
+        logger: defaultLogger.createLogger({
+          logLevel: logLevel
+        }),
         ...options
       });
 
@@ -106,6 +117,7 @@ function initialize(options) {
       `);
 
       datafile = await rp(`https://cdn.optimizely.com/datafiles/${sdkKey}.json`)
+      datafile._lastUpdated = new Date();
 
       res.sendStatus(200)
     },
@@ -121,7 +133,6 @@ function initialize(options) {
      */
     datafileRoute(req, res, next) {
       const datafile = (req && req.optimizely && req.optimizely.datafile) || {}
-      datafile.lastUpdated = new Date();
       res.setHeader('Content-Type', 'application/json');
       res.status(200).send(JSON.stringify(datafile, null, '  '));
     },
