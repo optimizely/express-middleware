@@ -5,6 +5,7 @@ var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var bodyParser = require('body-parser');
 
+var router = express.Router();
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 
@@ -25,7 +26,9 @@ app.use(optimizely.middleware);
 app.use('/webhooks/optimizely', bodyParser.text({ type: '*/*' }), optimizely.webhookRequest);
 app.use('/optimizely/datafile', optimizely.datafileRoute);
 
-app.use('/', indexRouter);
+app.get('/', function(req, res, next) {
+  res.render('index', { title: 'Express' });
+});
 
 /*************/
 
