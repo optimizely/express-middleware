@@ -6,6 +6,7 @@ var optimizelyExpressSdk = require('@optimizely/express-sdk');
 var optimizely = optimizelyExpressSdk.initialize({
   sdkKey: 'CZsVVgn6j9ce6fNPt2ZEiB',
 });
+
 app.use(optimizely.middleware);
 app.use('/webhooks/optimizely', bodyParser.text({ type: '*/*' }), optimizely.webhookRequest);
 app.use('/optimizely/datafile', optimizely.datafileRoute);
