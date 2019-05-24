@@ -6,7 +6,6 @@ var logger = require('morgan');
 var bodyParser = require('body-parser');
 
 var router = express.Router();
-
 var app = express();
 
 // view engine setup
@@ -25,7 +24,10 @@ app.use('/webhooks/optimizely', bodyParser.text({ type: '*/*' }), optimizely.web
 app.use('/optimizely/datafile', optimizely.datafileRoute);
 
 app.get('/', function(req, res, next) {
-  res.render('index', { title: 'Express' });
+  const isEnabled = req.optimizely.client.isFeatureEnabled('purchase_option', '123');
+  res.render('index', {
+    title: 'Express: ' + (isEnabled ? 'feature on!' : 'feature off')
+  });
 });
 
 /*************/
