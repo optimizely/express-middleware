@@ -6,6 +6,8 @@
     "start": "node ./bin/www"
   },
   "dependencies": {
+    "@optimizely/js-sdk-datafile-manager": "^0.3.0",
+    "@optimizely/optimizely-sdk": "^3.2.0-beta",
     "body-parser": "^1.19.0",
     "cookie-parser": "~1.4.3",
     "debug": "~2.6.9",
