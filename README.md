@@ -2,12 +2,17 @@
 
 ### Usage
 ```javascript
-var optimizelyExpressSdk = require('@optimizely/express-sdk');
-var optimizely = optimizelyExpressSdk.initialize({
+const optimizelyExpressSdk = require('@optimizely/express-sdk');
+const optimizely = optimizelyExpressSdk.initialize({
   sdkKey: 'CZsVVgn6j9ce6fNPt2ZEiB',
+  datafileOptions: {
+    autoUpdate: true,
+    updateInterval: 600000 // 10 minutes in milliseconds
+  },
 });
 
 app.use(optimizely.middleware);
+
 app.use('/webhooks/optimizely', bodyParser.text({ type: '*/*' }), optimizely.webhookRequest);
 app.use('/optimizely/datafile', optimizely.datafileRoute);
 

@@ -1,12 +1,12 @@
-var createError = require('http-errors');
-var express = require('express');
-var path = require('path');
-var cookieParser = require('cookie-parser');
-var logger = require('morgan');
-var bodyParser = require('body-parser');
+const createError = require('http-errors');
+const express = require('express');
+const path = require('path');
+const cookieParser = require('cookie-parser');
+const logger = require('morgan');
+const bodyParser = require('body-parser');
 
-var router = express.Router();
-var app = express();
+const router = express.Router();
+const app = express();
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -16,10 +16,14 @@ app.set('view engine', 'jade');
  * Optimizely Express SDK Usage
  */
 // TODO: Update once package is public
-//var optimizelyExpressSdk = require('../index.js');
-var optimizelyExpressSdk = require('./express-sdk.js');
-var optimizely = optimizelyExpressSdk.initialize({
+//const optimizelyExpressSdk = require('../index.js');
+const optimizelyExpressSdk = require('./express-sdk.js');
+const optimizely = optimizelyExpressSdk.initialize({
   sdkKey: 'CZsVVgn6j9ce6fNPt2ZEiB',
+  datafileOptions: {
+    autoUpdate: true,
+    updateInterval: 600000 // 10 minutes in milliseconds
+  },
 });
 app.use(optimizely.middleware);
 app.use('/webhooks/optimizely', bodyParser.text({ type: '*/*' }), optimizely.webhookRequest);
