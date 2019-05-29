@@ -1,6 +1,6 @@
 {
   "name": "optimizely-express-sdk",
-  "version": "1.0.0",
+  "version": "0.1.0",
   "description": "Express middleware for Optimizely",
   "main": "index.js",
   "scripts": {
