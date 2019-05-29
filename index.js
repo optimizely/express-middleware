@@ -140,7 +140,7 @@ function initialize(options) {
     },
 
     /**
-     * isRouteEnabled
+     * isRouteEnabled (EXPERIMENTAL-FEATURE)
      *
      * Provides a method which can be used to block a route in express on whether the feature is enabled or not
      *
