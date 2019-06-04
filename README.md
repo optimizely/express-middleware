@@ -106,3 +106,54 @@ app.get('/', function(req, res, next) {
 ### Contributing
 
 Please see [CONTRIBUTING](CONTRIBUTING.md).
+
+### Credits
+
+This repository includes code from the following open source projects:
+
+body-parser	
+Copyright (c) 2014 Jonathan Ong <me@jongleberry.com>
+Copyright (c) 2014-2015 Douglas Christopher Wilson <doug@somethingdoug.com>
+License (MIT): https://github.com/expressjs/body-parser
+
+cookie-parser
+Copyright (c) 2014 TJ Holowaychuk <tj@vision-media.ca>
+Copyright (c) 2015 Douglas Christopher Wilson <doug@somethingdoug.com>
+License (MIT): https://github.com/expressjs/cookie-parser
+
+debug
+Copyright (c) 2014 TJ Holowaychuk <tj@vision-media.ca>
+License (MIT): https://github.com/visionmedia/debug
+
+express	
+Copyright (c) 2009-2014 TJ Holowaychuk <tj@vision-media.ca>
+Copyright (c) 2013-2014 Roman Shtylman <shtylman+expressjs@gmail.com>
+Copyright (c) 2014-2015 Douglas Christopher Wilson <doug@somethingdoug.com>
+License (MIT): https://github.com/expressjs/express
+
+http-errors	
+Copyright (c) 2014 Jonathan Ong me@jongleberry.com
+Copyright (c) 2016 Douglas Christopher Wilson doug@somethingdoug.com
+License (MIT): https://github.com/jshttp/http-errors
+
+jade	
+Copyright (c) 2009-2014 TJ Holowaychuk <tj@vision-media.ca>
+License (MIT): https://github.com/dscape/jade
+
+morgan	
+Copyright (c) 2014 Jonathan Ong <me@jongleberry.com>
+Copyright (c) 2014-2017 Douglas Christopher Wilson <doug@somethingdoug.com>
+License (MIT): https://github.com/expressjs/morgan
+
+### Additional Code
+
+This software may be used with additional code that is separately downloaded by you. These components are subject to their own license terms, which you should review carefully.
+
+request
+Copyright (c)  2010-2012 Mikeal Rogers
+License (Apache 2.0): https://github.com/request/request
+
+request-promise
+Copyright (c)  2017, Nicolai Kamenzky, Ty Abonil, and contributors
+License (ISC): https://github.com/request/request-promise
+
