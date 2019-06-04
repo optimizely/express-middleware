@@ -30,6 +30,8 @@ const rp = require('request-promise');
  * Middelware which initializes and installs the Optimizely SDK onto an express request object
  *
  * @param {Object} options
+ * @param {Object} options.sdkKey SDK key for your Optimizely project's environment
+ * @param {Object} options.datafile initial datafile if you want to provide specific defaults on startup
  * @param {Object} options.logLevel log level for the default logger
  *
  * @returns {Function} to handle the express request
@@ -43,7 +45,9 @@ function initialize(options) {
   } = options;
 
 
-  const defaultLogger = require('@optimizely/optimizely-sdk').logging;
+  OptimizelySdk.setLogLevel(logLevel)
+  OptimizelySdk.setLogger(OptimizelySdk.logging.createLogger())
+
   const manager = new DatafileManager({
     sdkKey,
     ...options
@@ -56,7 +60,7 @@ function initialize(options) {
   }
 
   manager.on('update', updateDatafile);
-  manager.onReady().then(updateDatafile);
+  //manager.onReady().then(updateDatafile);
 
   manager.start();
 
@@ -73,9 +77,6 @@ function initialize(options) {
     middleware(req, res, next) {
       const optimizelyClient = OptimizelySdk.createInstance({
         datafile: datafile,
-        logger: defaultLogger.createLogger({
-          logLevel: logLevel
-        }),
         ...options
       });
 
