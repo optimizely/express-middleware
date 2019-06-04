@@ -65,6 +65,8 @@ app.use('/webhooks/optimizely', bodyParser.text({ type: '*/*' }), optimizely.web
 ```
 Once you have successfully implemented the webhook, you can turn off the polling completely by setting the `autoUpdate` attribute to false above in the [configuration](#Configuration) step.
 
+Note: If you deploy your server to multiple different machines, this will not ensure that the two machines are in-sync with the latest configuration. If you would like to see support for cross-machine syncing via webhooks, please let us know by opening an issue on this repository.
+
 ### `optimizely.datafileRoute`
 If you would like to see the latest configuration of your feature flags and experiments as defined in Optimizely's UI, you can see the datafile by installing this route on your server:
 ```
