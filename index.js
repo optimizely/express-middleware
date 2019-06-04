@@ -49,25 +49,11 @@ function initialize(options) {
     ...options
   });
 
-  let optimizelyClient;
-
-  function updateClient(datafile) {
-    optimizelyClient = OptimizelySdk.createInstance({
-      datafile: datafile,
-      logger: defaultLogger.createLogger({
-        logLevel: logLevel
-      }),
-      ...options
-    });
-  }
-
   function updateDatafile() {
     datafile = manager.get()
     datafile._lastUpdated = new Date();
-    updateClient(datafile);
+    console.log('[Optimizely] Datafile Updated!');
   }
-
-  updateClient({});
 
   manager.on('update', updateDatafile);
   manager.onReady().then(updateDatafile);
@@ -85,6 +71,13 @@ function initialize(options) {
      * @param {Function} next express routing next function
      */
     middleware(req, res, next) {
+      const optimizelyClient = OptimizelySdk.createInstance({
+        datafile: datafile,
+        logger: defaultLogger.createLogger({
+          logLevel: logLevel
+        }),
+        ...options
+      });
 
       req.optimizely = {
         datafile: datafile || {},
