@@ -13,7 +13,7 @@ app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
 
 /*************
- * Optimizely Express SDK Usage
+ * Optimizely Express Middleware Usage
  */
 // TODO: Update once package is public
 //const optimizelyExpressSdk = require('../index.js');
