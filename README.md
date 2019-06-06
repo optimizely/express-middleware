@@ -9,12 +9,12 @@ Optimizely Rollouts is free feature flags for development teams. Easily roll out
 ## Installation
 Using NPM:
 ```
-npm install @optimizely/express-sdk --save
+npm install @optimizely/express --save
 ```
 
 Using yarn:
 ```
-yarn add @optimizely/express-sdk
+yarn add @optimizely/express
 ```
 
 ## Configuration
