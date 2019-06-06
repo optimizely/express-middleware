@@ -1,5 +1,5 @@
 /**
- * Optimizely Express SDK
+ * Optimizely Express Middleware
  *
  * Copyright 2019, Optimizely
  *
