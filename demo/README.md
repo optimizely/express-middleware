@@ -1,4 +1,4 @@
-## Optimizely Express SDK Demo
+## Optimizely Express Middleware Demo
 
 A standard express server demonstrating the usage of @optimizely/express-sdk. Run the application with `npm start`
 
