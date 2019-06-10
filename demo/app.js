@@ -15,10 +15,8 @@ app.set('view engine', 'jade');
 /*************
  * Optimizely Express Middleware Usage
  */
-// TODO: Update once package is public
-//const optimizelyExpressSdk = require('../index.js');
-const optimizelyExpressSdk = require('./express-sdk.js');
-const optimizely = optimizelyExpressSdk.initialize({
+const optimizelyExpress = require('./express-sdk.js');
+const optimizely = optimizelyExpress.initialize({
   sdkKey: 'CZsVVgn6j9ce6fNPt2ZEiB',
   datafileOptions: {
     autoUpdate: true,
