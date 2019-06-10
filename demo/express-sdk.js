@@ -60,7 +60,7 @@ function initialize(options) {
   }
 
   manager.on('update', updateDatafile);
-  //manager.onReady().then(updateDatafile);
+  manager.onReady().then(updateDatafile);
 
   manager.start();
 
