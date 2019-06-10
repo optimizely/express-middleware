@@ -22,7 +22,7 @@ const optimizely = optimizelyExpressSdk.initialize({
   sdkKey: 'CZsVVgn6j9ce6fNPt2ZEiB',
   datafileOptions: {
     autoUpdate: true,
-    updateInterval: 600000 // 10 minutes in milliseconds
+    updateInterval: 5*1000 // 5 seconds in milliseconds
   },
 });
 app.use(optimizely.middleware);

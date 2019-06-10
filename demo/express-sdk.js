@@ -1,5 +1,5 @@
 /**
- * Optimizely Express SDK
+ * Optimizely Express Middleware
  *
  * Copyright 2019, Optimizely
  *
@@ -40,13 +40,15 @@ function initialize(options) {
     sdkKey,
     datafile,
     logLevel,
+    datafileOptions,
   } = options;
 
 
   const defaultLogger = require('@optimizely/optimizely-sdk').logging;
   const manager = new DatafileManager({
     sdkKey,
-    ...options
+    ...options,
+    ...datafileOptions,
   });
 
   function updateDatafile() {
@@ -76,7 +78,10 @@ function initialize(options) {
         logger: defaultLogger.createLogger({
           logLevel: logLevel
         }),
-        ...options
+        ...options,
+        datafileOptions: {
+          autoUpdate: false, // Ensure the SDK doesn't also try to auto-update on its own
+        },
       });
 
       req.optimizely = {
@@ -140,7 +145,7 @@ function initialize(options) {
     },
 
     /**
-     * isRouteEnabled
+     * isRouteEnabled (EXPERIMENTAL-FEATURE)
      *
      * Provides a method which can be used to block a route in express on whether the feature is enabled or not
      *
