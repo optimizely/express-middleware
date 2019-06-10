@@ -19,8 +19,8 @@ yarn add @optimizely/express
 
 ## Configuration
 ```javascript
-const optimizelyExpressSdk = require('@optimizely/express');
-const optimizely = optimizelyExpressSdk.initialize({
+const optimizelyExpress = require('@optimizely/express');
+const optimizely = optimizelyExpress.initialize({
   sdkKey: 'CZsVVgn6j9ce6fNPt2ZEiB',
   datafileOptions: {
     autoUpdate: true,
