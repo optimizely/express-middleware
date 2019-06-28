@@ -11,6 +11,7 @@
   "engines": {
     "node": ">=8.11.3"
   },
+  "repository": "optimizely/express-middleware",
   "keywords": [],
   "author": "",
   "license": "ISC",
