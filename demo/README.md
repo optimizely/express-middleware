@@ -1,9 +1,8 @@
 ## Optimizely Express Middleware Demo
 
-A standard express server demonstrating the usage of @optimizely/express-sdk. Run the application with `npm start`
+A standard express server demonstrating the usage of @optimizely/express-sdk.
 
-#### TODO
-- Update package dependencies to be only dependent on the express sdk
-- Show how to pass attributes to isFeatureEnabled
-- Show how to use isRouteEnabled with a userId
-- Have SDK send client engine with express-middleware
+# Running Locally
+- Clone this repo
+- Run `npm install`
+- Run the application with `npm start`
