@@ -43,7 +43,7 @@ The above middleware adds the following object on the express request object
 ```
 req.optimizely = {
   datafile: A representation of all of your feature flags and experiments as defined in Optimizely
-  client: The Optimizely SDK client instance which has methods like for `isFeatureEnabled`, `activate`, `track`, etc.
+  client: The Optimizely SDK client instance which has methods for `isFeatureEnabled`, `activate`, `track`, etc.
 }
 ```
 
