@@ -58,7 +58,7 @@ function initialize(options) {
     console.log('[OPTIMIZELY] Datafile Updated!');
   }
 
-  const manager = optimizelyClient.projectConfigManager.datafileManager
+  const manager = optimizelyClient.projectConfigManager.datafileManager;
   manager.on('update', updateDatafile);
   manager.onReady().then(updateDatafile);
   manager.start();
