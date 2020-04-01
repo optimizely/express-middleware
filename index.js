@@ -61,7 +61,6 @@ function initialize(options) {
   const manager = optimizelyClient.projectConfigManager.datafileManager;
   manager.on('update', updateDatafile);
   manager.onReady().then(updateDatafile);
-  manager.start();
 
   return {
     /**
