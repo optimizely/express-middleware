@@ -27,7 +27,7 @@ const rp = require('request-promise');
 /**
  * optimizely
  *
- * Middelware which initializes and installs the Optimizely SDK onto an express request object
+ * Middleware which initializes and installs the Optimizely SDK onto an express request object
  *
  * @param {Object} options
  * @param {Object} options.logLevel log level for the default logger
@@ -40,26 +40,27 @@ function initialize(options) {
     sdkKey,
     datafile,
     logLevel,
-    datafileOptions,
   } = options;
 
 
   const defaultLogger = require('@optimizely/optimizely-sdk').logging;
-  const manager = new DatafileManager({
-    sdkKey,
+
+  const optimizelyClient = OptimizelySdk.createInstance({
+    logger: defaultLogger.createLogger({
+      logLevel: logLevel
+    }),
     ...options,
-    ...datafileOptions,
   });
 
   function updateDatafile() {
     datafile = manager.get()
     datafile._lastUpdated = new Date();
-    console.log('[Optimizely] Datafile Updated!');
+    console.log('[OPTIMIZELY] Datafile Updated!');
   }
 
+  const manager = optimizelyClient.projectConfigManager.datafileManager
   manager.on('update', updateDatafile);
   manager.onReady().then(updateDatafile);
-
   manager.start();
 
   return {
@@ -73,17 +74,6 @@ function initialize(options) {
      * @param {Function} next express routing next function
      */
     middleware(req, res, next) {
-      const optimizelyClient = OptimizelySdk.createInstance({
-        datafile: datafile,
-        logger: defaultLogger.createLogger({
-          logLevel: logLevel
-        }),
-        ...options,
-        datafileOptions: {
-          autoUpdate: false, // Ensure the SDK doesn't also try to auto-update on its own
-        },
-      });
-
       req.optimizely = {
         datafile: datafile || {},
         client: optimizelyClient,
