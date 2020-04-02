@@ -76,7 +76,7 @@ app.use('/optimizely/datafile', optimizely.datafileRoute);
 ## Demo
 See the full [demo of usage](demo), reproduced below:
 ```
-const optimizelyExpressSdk = require('@optimizely/express-sdk');
+const optimizelyExpressSdk = require('@optimizely/express');
 const optimizely = optimizelyExpressSdk.initialize({
   sdkKey: 'CZsVVgn6j9ce6fNPt2ZEiB',
   datafileOptions: {
@@ -102,7 +102,7 @@ app.get('/', function(req, res, next) {
 
 ## About
 
-`@optimizely/express-sdk` is developed and maintained by [Optimizely](https://optimizely.com) and many [contributors](https://github.com/optimizely/express-sdk/graphs/contributors). If you're interested in learning more about what Optimizely X Full Stack can do for your company, please [get in touch](mailto:eng@optimizely.com)!
+`@optimizely/express` is developed and maintained by [Optimizely](https://optimizely.com) and many [contributors](https://github.com/optimizely/express-sdk/graphs/contributors). If you're interested in learning more about what Optimizely X Full Stack can do for your company, please [get in touch](mailto:eng@optimizely.com)!
 
 
 ### Contributing
