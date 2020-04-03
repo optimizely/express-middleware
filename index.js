@@ -79,6 +79,7 @@ function initialize(options) {
           logLevel: logLevel
         }),
         ...options,
+        sdkKey: undefined, // Ensure the SDK doesn't try to fetch the datafile on its own
         datafileOptions: {
           autoUpdate: false, // Ensure the SDK doesn't also try to auto-update on its own
         },
